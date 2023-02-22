@@ -1,0 +1,54 @@
+<div *ngIf="!!message" class="alert alert-success text-center">
+  {{message}}
+</div>
+<div class="pb-3 pt-3">
+  <div fxLayoutAlign="center center" class="profile row rounded">
+    <div class="row-xs-12 row-sm-4 mt-2 pb-2" style="border-bottom: 1px solid gray;">
+      <div class="info col">
+        <ul class="info list-group">
+          <li class="list-group-item"><small>User ID: {{currentUser?.['id']}} </small>
+          </li>
+          <li class="list-group-item"><small>Username: {{currentUser?.['username']}}</small>
+          </li>
+          <li class="list-group-item"><small>Role : {{currentUser?.['role']}}</small>
+          <li class="list-group-item"><small>Total price of stocks : {{totalPrice.toFixed(2)}} $</small>
+          <li class="list-group-item"><small>Money: {{currentUser?.['account']?.['amountOfMoney']?.toFixed(2)}}
+            $</small>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row-xs-12 row-sm-10">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Amount</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let s of stocks">
+          <td>{{s.symbol}}</td>
+          <td>{{s.name}}</td>
+          <td>{{s.price}}</td>
+          <td id="{{s.id}}">{{s.amount}}</td>
+          <td>
+            <form action="post" [formGroup]="form" (ngSubmit)="onSubmit(s.id)">
+              <div>
+                <mat-form-field>
+                  <mat-label>Amount</mat-label>
+                  <input matInput id="amountOfStocks" type="number" formControlName="amountOfStocks">
+                </mat-form-field>
+                <button mat-raised-button color="primary" type="submit">Sell</button>
+              </div>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

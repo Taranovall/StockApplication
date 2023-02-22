@@ -1,0 +1,16 @@
+.main-div mat-card {
+  padding: 0px;
+  text-align: center;
+}
+
+.main-div mat-card a {
+  padding-bottom: 0.5rem;
+}
+
+.login-form {
+  padding: 0.5rem;
+}
+
+label {
+  display: block;
+}

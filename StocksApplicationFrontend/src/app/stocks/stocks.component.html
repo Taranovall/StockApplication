@@ -1,0 +1,39 @@
+<div *ngIf="!!message" class="alert alert-success text-center">
+  {{message}}
+</div>
+<div fxLayoutAlign="center center" fxFlexFill>
+  <div fxFlex="50">
+    <table mat-table [dataSource]="stocks" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="symbol">
+        <th mat-header-cell *matHeaderCellDef> Symbol</th>
+        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Price</th>
+        <td mat-cell *matCellDef="let element"> {{element.price}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="buy">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <form action="post" [formGroup]="form" (ngSubmit)="onSubmit(element.id)">
+            <mat-form-field>
+            <input matInput id="amountOfStocks" type="number" formControlName="amountOfStocks">
+            </mat-form-field>
+          <button mat-raised-button color="primary" type="submit">Buy</button>
+          </form>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>

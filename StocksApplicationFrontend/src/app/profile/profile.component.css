@@ -1,0 +1,11 @@
+.profile {
+  margin-left: 25% !important;
+  margin-right: 25% !important;
+  margin-bottom: 5%;
+  margin-top: 5%;
+  border: 1px solid gray;
+}
+
+table td {
+  vertical-align: middle;
+}

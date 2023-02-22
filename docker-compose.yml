@@ -1,0 +1,51 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+version: '3'
+
+#Define services
+services:
+
+  #PostgreSQL Database for the application
+  stock-postgres:
+    image: "postgres:9.6-alpine"
+    container_name: stock-postgres
+    #Volume mounted for database for the storage
+    volumes:
+      - stock-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432 # Forward the exposed port 5432 on the container to port 5432 on the host machine
+
+    #Environment variable for DB name, user and password
+    environment:
+      - POSTGRES_DB=stock
+      - POSTGRES_USER=stock
+      - POSTGRES_PASSWORD=stock
+
+  #Back-end Spring Boot Application
+  stock-backend:
+    #The docker file in stock-backend build the jar and provides the docker image with the following name.
+    build: ./StocksApplicationBackend
+    container_name: stock-backend
+
+    #Environment variables for Spring Boot Application.
+    environment:
+      - DB_SERVER=stock-postgres
+      - POSTGRES_DB=stock
+      - POSTGRES_USER=stock
+      - POSTGRES_PASSWORD=stock
+    ports:
+      - 8080:8080 # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    links:
+      - stock-postgres
+
+  #Fron-end Angular Application
+  stock-frontend:
+    build: ./StocksApplicationFrontend
+    container_name: stock-frontend
+    ports:
+      - 4200:80
+    links:
+      - stock-backend
+
+#Volumes for DB data
+volumes:
+  stock-data:

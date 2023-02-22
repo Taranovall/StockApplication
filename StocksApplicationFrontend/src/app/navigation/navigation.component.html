@@ -1,0 +1,10 @@
+<mat-toolbar color="primary">
+  <span class="pointer" routerLink="/">Stocks</span>
+  <span class="example-spacer"></span>
+  <span id="money" class="money">{{tokenService.getUser()?.['account']?.['amountOfMoney'].toFixed(2)}} $</span>
+  <button mat-button [matMenuTriggerFor]="menu">{{ tokenService.getUser()?.['username'] }}</button>
+  <mat-menu #menu="matMenu">
+    <a mat-menu-item routerLink="profile">Profile</a>
+    <button mat-menu-item (click)="this.tokenService.signOut()">Sign out</button>
+  </mat-menu>
+</mat-toolbar>

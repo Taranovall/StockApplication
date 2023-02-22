@@ -1,0 +1,88 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card fxFlex="25">
+    <mat-toolbar color="primary">Sign in</mat-toolbar>
+    <form method="post" fxLayoutAlign="stretch" fxLayout="column" class="sign-up-form"
+          name="form"
+          (ngSubmit)="f.form.valid && onSubmit()"
+          #f="ngForm"
+          novalidate
+    >
+      <mat-form-field>
+        <div>
+          <label for="username">Username</label>
+          <input
+            matInput
+            id="username"
+            type="text"
+            class="form-control"
+            name="username"
+            [(ngModel)]="form.username"
+            required
+            minlength="3"
+            maxlength="20"
+            #username="ngModel"
+          />
+        </div>
+        <div *ngIf="f.submitted && username.invalid">
+          <div *ngIf="username.errors?.['required']">Username is required</div>
+          <div *ngIf="username.errors?.['minlength']">
+            Username must be at least 3 characters
+          </div>
+          <div *ngIf="username.errors?.['maxlength']">
+            Username must be at most 20 characters
+          </div>
+        </div>
+        <div *ngIf="isSignUpFailed">
+          <div>{{errorMessage}}</div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <div>
+          <label for="password">Password</label>
+          <input
+            matInput
+            id="password"
+            type="password"
+            class="form-control"
+            name="password"
+            [(ngModel)]="form.password"
+            required
+            minlength="4"
+            #password="ngModel"
+          />
+        </div>
+        <div *ngIf="f.submitted && password.invalid">
+          <div *ngIf="password.errors?.['required']">Password is required</div>
+          <div *ngIf="password.errors?.['minlength']">
+            Password must be at least 4 characters
+          </div>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field>
+        <div>
+          <label for="repeatPassword">Repeat password</label>
+          <input
+            matInput
+            id="repeatPassword"
+            type="password"
+            class="form-control"
+            name="repeatPassword"
+            [(ngModel)]="form.repeatPassword"
+            required
+            pattern="{{ password.value }}"
+            minlength="4"
+            #repeatPassword="ngModel"
+          />
+        </div>
+        <div *ngIf="f.submitted">
+          <div *ngIf="repeatPassword.errors?.['required']">Confirm password is required</div>
+          <div *ngIf="repeatPassword.errors?.['pattern']">Passwords does not match</div>
+        </div>
+      </mat-form-field>
+      <button mat-raised-button type="submit" color="primary" class="btn-block">Sign in</button>
+    </form>
+    <a routerLink="/sign_in">Already have an account? Sign in</a>
+  </mat-card>
+</div>
